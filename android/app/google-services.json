@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1065907360298",
+    "project_id": "crisisconnect-youngminds",
+    "storage_bucket": "crisisconnect-youngminds.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1065907360298:android:918123aed6c17baae12953",
+        "android_client_info": {
+          "package_name": "com.youngminds.crisisconnect"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARpl27imTQapM1qbNsOnJqRa69OUXklAE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
