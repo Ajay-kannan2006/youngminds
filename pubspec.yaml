@@ -39,7 +39,9 @@ dependencies:
   firebase_auth: ^4.19.5
   cloud_firestore: ^4.17.3
   firebase_analytics: ^10.10.5
-
+  google_fonts: ^6.2.1
+  flutter_image: ^4.0.0
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -49,7 +51,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.0
+  flutter_lints: ^4.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -62,11 +64,8 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
-
+  assets:
+    - images/UNITED.gif
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
@@ -90,5 +89,11 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
+  fonts:
+    - family: 
+      fonts:
+        - asset: /-Bold.ttf
+        - weight: 700
+      
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
