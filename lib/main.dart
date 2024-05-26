@@ -1,4 +1,6 @@
-import 'package:crisisconnect/pages/help_button_page.dart';
+// import 'package:crisisconnect/pages/Emergency_button.dart';
+import 'package:crisisconnect/pages/start_page.dart';
+// import 'package:crisisconnect/pages/start_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: HomePage(),
+      home: StartPage(),
     );
   }
 }

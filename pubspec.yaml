@@ -41,6 +41,7 @@ dependencies:
   firebase_analytics: ^10.10.5
   google_fonts: ^6.2.1
   flutter_image: ^4.0.0
+  flutter_svg :  ^0.22.0
   
 dev_dependencies:
   flutter_test:
@@ -66,6 +67,9 @@ flutter:
 
   assets:
     - images/UNITED.gif
+    - images/Phone.png
+    - images/Istockphoto1337144146612x6121.png
+    - images/arrow1.svg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
