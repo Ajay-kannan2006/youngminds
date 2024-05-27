@@ -30,38 +30,32 @@ class StartPage extends StatelessWidget {
           Positioned(
             top: screenHeight * 0.5525,
             left: screenWidth * 0.1,
-            child: Container(
+            child: SizedBox(
               width: screenWidth * 0.816,
               height: screenHeight * 0.07,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-                color: Color.fromRGBO(1, 178, 125, 1),
-              ),
-              child: Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const EmergencyButton()),
-                    );
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all<Color>(
-                      const Color.fromRGBO(1, 178, 125, 1),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const EmergencyButton(),
                     ),
-                    minimumSize: WidgetStateProperty.all<Size>(
-                      Size(screenWidth * 0.816, screenHeight * 0.07),
-                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromRGBO(1, 178, 125, 1),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
                   ),
-                  child: Text(
-                    'START',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
-                      color: const Color.fromRGBO(255, 255, 255, 1),
-                      fontSize: screenHeight * 0.03,
-                      fontWeight: FontWeight.normal,
-                    ),
+                  minimumSize: Size(screenWidth * 0.816, screenHeight * 0.07),
+                ),
+                child: Text(
+                  'START',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.inter(
+                    color: const Color.fromRGBO(255, 255, 255, 1),
+                    fontSize: screenHeight * 0.03,
+                    fontWeight: FontWeight.normal,
                   ),
                 ),
               ),

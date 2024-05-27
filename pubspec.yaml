@@ -69,7 +69,13 @@ flutter:
     - images/UNITED.gif
     - images/Phone.png
     - images/Istockphoto1337144146612x6121.png
-    - images/arrow1.svg
+    - images/Add.png
+    - images/doctor.png
+    - images/Fireagency.png
+    - images/navy.png
+    - images/police.png
+    - images/Search.png
+    - images/Airforce.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

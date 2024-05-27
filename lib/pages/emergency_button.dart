@@ -1,3 +1,4 @@
+import 'package:crisisconnect/pages/listing_the_agencies.dart';
 import 'package:flutter/material.dart';
 
 class EmergencyButton extends StatelessWidget {
@@ -12,7 +13,7 @@ class EmergencyButton extends StatelessWidget {
       body: Container(
         width: screenWidth,
         height: screenHeight,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Color.fromRGBO(1, 178, 125, 1),
         ),
         child: Stack(
@@ -23,7 +24,7 @@ class EmergencyButton extends StatelessWidget {
               child: Container(
                 width: screenWidth,
                 height: screenHeight * 0.8,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Color.fromRGBO(255, 255, 255, 1),
                 ),
               ),
@@ -34,7 +35,7 @@ class EmergencyButton extends StatelessWidget {
               child: Container(
                 width: screenWidth * 1.52,
                 height: screenHeight * 0.252,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Color.fromRGBO(255, 255, 255, 1),
                   borderRadius: BorderRadius.all(Radius.elliptical(548, 202)),
                 ),
@@ -46,7 +47,7 @@ class EmergencyButton extends StatelessWidget {
               child: Container(
                 width: screenWidth * 0.17,
                 height: screenHeight * 0.06,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Color.fromRGBO(217, 217, 217, 1),
                   borderRadius: BorderRadius.all(Radius.elliptical(61, 48)),
                 ),
@@ -58,7 +59,7 @@ class EmergencyButton extends StatelessWidget {
               child: Container(
                 width: screenWidth * 0.52,
                 height: screenHeight * 0.21375,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Color.fromRGBO(1, 178, 125, 1),
                   borderRadius: BorderRadius.all(Radius.elliptical(186, 171)),
                 ),
@@ -70,7 +71,7 @@ class EmergencyButton extends StatelessWidget {
               child: Container(
                 width: screenWidth * 0.622,
                 height: screenHeight * 0.265,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Color.fromRGBO(1, 178, 125, 0.6),
                   borderRadius: BorderRadius.all(Radius.elliptical(224, 212)),
                 ),
@@ -82,7 +83,7 @@ class EmergencyButton extends StatelessWidget {
               child: Container(
                 width: screenWidth * 0.758,
                 height: screenHeight * 0.30875,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Color.fromRGBO(1, 178, 125, 0.44),
                   borderRadius: BorderRadius.all(Radius.elliptical(273, 247)),
                 ),
@@ -95,7 +96,7 @@ class EmergencyButton extends StatelessWidget {
                 'Emergency Help Needed?',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Color.fromRGBO(0, 0, 0, 1),
+                  color: const Color.fromRGBO(0, 0, 0, 1),
                   fontFamily: 'Inter',
                   fontSize: screenHeight * 0.035,
                   fontWeight: FontWeight.normal,
@@ -106,17 +107,37 @@ class EmergencyButton extends StatelessWidget {
             Positioned(
               top: screenHeight * 0.5625,
               left: screenWidth * 0.344,
-              child: Container(
+              child: SizedBox(
                 width: screenWidth * 0.3,
                 height: screenHeight * 0.11875,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('images/Phone.png'),
-                    fit: BoxFit.fitWidth,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ListingTheAgency(),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0, // No shadow
+                  ).copyWith(
+                    backgroundColor: WidgetStateProperty.resolveWith<Color>(
+                      (states) => Colors.transparent,
+                    ),
+                  ),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: double.infinity,
+                    child: Image.asset(
+                      'images/Phone.png',
+                      fit: BoxFit.fitWidth,
+                    ),
                   ),
                 ),
               ),
             ),
+
             // Positioned(
             //   top: screenHeight * 0.101,
             //   left: screenWidth * 0.819,
@@ -139,7 +160,7 @@ class EmergencyButton extends StatelessWidget {
                 'User123',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Color.fromRGBO(0, 0, 0, 1),
+                  color: const Color.fromRGBO(0, 0, 0, 1),
                   fontFamily: 'Inter',
                   fontSize: screenHeight * 0.02,
                   fontWeight: FontWeight.normal,
@@ -153,8 +174,8 @@ class EmergencyButton extends StatelessWidget {
               child: Container(
                 width: screenWidth * 0.16,
                 height: screenHeight * 0.06,
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(217, 217, 217, 0),
+                decoration: const BoxDecoration(
+                  color: Color.fromRGBO(0, 217, 217, 0),
                 ),
               ),
             ),
@@ -166,8 +187,8 @@ class EmergencyButton extends StatelessWidget {
                 onPressed: () {
                   Navigator.pop(context); // Navigate back to the previous page
                 },
-                child: RotationTransition(
-                  turns: const AlwaysStoppedAnimation(0),
+                child: const RotationTransition(
+                  turns: AlwaysStoppedAnimation(0),
                   child: Icon(
                     Icons.arrow_back, // Change from SvgPicture to Icon
                     size: 24,
