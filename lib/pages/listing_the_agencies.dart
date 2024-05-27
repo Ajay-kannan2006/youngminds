@@ -1,3 +1,4 @@
+import 'package:crisisconnect/pages/Help_confirmation.dart';
 import 'package:flutter/material.dart';
 
 class ListingTheAgency extends StatelessWidget {
@@ -118,15 +119,36 @@ class ListingTheAgency extends StatelessWidget {
             Positioned(
               top: screenHeight * 0.31125,
               left: screenWidth * 0.0639,
-              child: Container(
-                width: screenWidth * 0.8722,
-                height: screenHeight * 0.0775,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: const Color.fromRGBO(1, 178, 125, 1),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HelpConfirmation(),
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      const Color.fromRGBO(1, 178, 125, 1), // Button color
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  fixedSize: Size(
+                    screenWidth * 0.8722,
+                    screenHeight * 0.0775,
+                  ),
+                ),
+                child: const Text(
+                  '',
+                  style: TextStyle(
+                    color: Colors.white, // Text color
+                    fontSize: 16, // Text size
+                  ),
                 ),
               ),
             ),
+
             Positioned(
               top: screenHeight * 0.415,
               left: screenWidth * 0.0639,
@@ -447,7 +469,7 @@ class ListingTheAgency extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10.0),
                     color: Colors.white,
                     border: Border.all(
-                      color: Color.fromRGBO(1, 178, 125, 1),
+                      color: const Color.fromRGBO(1, 178, 125, 1),
                       width: 1.0,
                     ),
                   ),
@@ -458,7 +480,7 @@ class ListingTheAgency extends StatelessWidget {
                         color: Colors.grey,
                         fontSize: screenHeight * 0.02,
                       ),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 10),
                       border: InputBorder.none,
                     ),
                     onChanged: (value) {
