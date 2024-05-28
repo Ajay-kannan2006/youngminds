@@ -1,4 +1,5 @@
 import 'package:crisisconnect/pages/emergency_button.dart';
+import 'package:crisisconnect/pages/user_sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart'; // Added import for Google Fonts
 
@@ -101,15 +102,32 @@ class StartPage extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: screenHeight * 0.725,
+            top: screenHeight * 0.715,
             left: screenWidth * 0.678,
-            child: Text(
-              'Sign Up',
-              textAlign: TextAlign.center,
-              style: GoogleFonts.inter(
-                color: const Color.fromRGBO(236, 109, 55, 1),
-                fontSize: screenHeight * 0.025,
-                fontWeight: FontWeight.normal,
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const UserSignUp(),
+                  ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                elevation: 0, // No shadow
+              ).copyWith(
+                backgroundColor: WidgetStateProperty.resolveWith<Color>(
+                  (states) => Colors.transparent,
+                ),
+              ),
+              child: Text(
+                'Sign Up',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.inter(
+                  color: const Color.fromRGBO(236, 109, 55, 1),
+                  fontSize: screenHeight * 0.025,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
             ),
           ),
