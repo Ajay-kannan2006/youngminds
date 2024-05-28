@@ -1,3 +1,4 @@
+import 'package:crisisconnect/pages/map_page.dart';
 import 'package:flutter/material.dart';
 
 class HelpConfirmation extends StatelessWidget {
@@ -41,93 +42,6 @@ class HelpConfirmation extends StatelessWidget {
                     Radius.elliptical(
                         screenWidth * 1.522, screenHeight * 0.252),
                   ),
-                ),
-              ),
-            ),
-            Positioned(
-              top: screenHeight * 0.018,
-              left: screenWidth * 0.956,
-              child: Container(
-                width: screenWidth * 0.067,
-                height: screenHeight * 0.031,
-                decoration: const BoxDecoration(
-                  color: Color.fromRGBO(255, 255, 255, 1),
-                ),
-              ),
-            ),
-            Positioned(
-              top: screenHeight * 0.02,
-              left: screenWidth * 0.819,
-              child: Container(
-                width: screenWidth * 0.053,
-                height: screenHeight * 0.025,
-                decoration: const BoxDecoration(
-                  color: Color.fromRGBO(255, 255, 255, 1),
-                ),
-              ),
-            ),
-            Positioned(
-              top: screenHeight * 0.02,
-              left: screenWidth * 0.819,
-              child: Container(
-                width: screenWidth * 0.053,
-                height: screenHeight * 0.025,
-                decoration: const BoxDecoration(
-                  color: Color.fromRGBO(255, 255, 255, 1),
-                ),
-              ),
-            ),
-            Positioned(
-              top: screenHeight * 0.02,
-              left: screenWidth * 0.744,
-              child: Container(
-                width: screenWidth * 0.061,
-                height: screenHeight * 0.021,
-                decoration: const BoxDecoration(
-                  color: Color.fromRGBO(255, 255, 255, 1),
-                ),
-              ),
-            ),
-            Positioned(
-              top: screenHeight * 0.02,
-              left: screenWidth * 0.744,
-              child: Container(
-                width: screenWidth * 0.061,
-                height: screenHeight * 0.021,
-                decoration: const BoxDecoration(
-                  color: Color.fromRGBO(255, 255, 255, 1),
-                ),
-              ),
-            ),
-            Positioned(
-              top: screenHeight * 0.024,
-              left: screenWidth * 0.019,
-              child: Text(
-                '9:47',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: const Color.fromRGBO(0, 0, 0, 1),
-                  fontFamily: 'Inter',
-                  fontSize: screenWidth * 0.042,
-                  letterSpacing: 0,
-                  fontWeight: FontWeight.normal,
-                  height: 1,
-                ),
-              ),
-            ),
-            Positioned(
-              top: screenHeight * 0.02,
-              left: screenWidth * 0.122,
-              child: Text(
-                ' AM',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: const Color.fromRGBO(0, 0, 0, 1),
-                  fontFamily: 'Inter',
-                  fontSize: screenWidth * 0.042,
-                  letterSpacing: 0,
-                  fontWeight: FontWeight.normal,
-                  height: 1,
                 ),
               ),
             ),
@@ -211,8 +125,8 @@ class HelpConfirmation extends StatelessWidget {
                 height: screenHeight * 0.06,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(
-                        'assets/images/Istockphoto1337144146612x6121.png'),
+                    image:
+                        AssetImage('/images/Istockphoto1337144146612x6121.png'),
                     fit: BoxFit.fitWidth,
                   ),
                 ),
@@ -235,17 +149,34 @@ class HelpConfirmation extends StatelessWidget {
             ),
             Positioned(
               top: screenHeight * 0.538,
-              left: screenWidth * 0.345,
-              child: Text(
-                'Help',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: const Color.fromRGBO(255, 255, 255, 1),
-                  fontFamily: 'Inter',
-                  fontSize: screenWidth * 0.143,
-                  letterSpacing: 0,
-                  fontWeight: FontWeight.normal,
-                  height: 1,
+              left: screenWidth * 0.290,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MapPage(),
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  elevation: 0, // No shadow
+                ).copyWith(
+                  backgroundColor: WidgetStateProperty.resolveWith<Color>(
+                    (states) => Colors.transparent,
+                  ),
+                ),
+                child: Text(
+                  'Help',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: const Color.fromRGBO(255, 255, 255, 1),
+                    fontFamily: 'Inter',
+                    fontSize: screenWidth * 0.143,
+                    letterSpacing: 0,
+                    fontWeight: FontWeight.normal,
+                    height: 1,
+                  ),
                 ),
               ),
             ),
