@@ -1,4 +1,5 @@
-import 'package:crisisconnect/pages/emergency_button.dart';
+import 'package:crisisconnect/pages/combined_sign_up.dart';
+import 'package:crisisconnect/pages/listing_the_agencies.dart';
 import 'package:crisisconnect/pages/user_sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart'; // Added import for Google Fonts
@@ -39,7 +40,7 @@ class StartPage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const EmergencyButton(),
+                      builder: (context) => const ListingTheAgency(),
                     ),
                   );
                 },
@@ -132,15 +133,32 @@ class StartPage extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: screenHeight * 0.785,
-            left: screenWidth * 0.787,
-            child: Text(
-              'Check',
-              textAlign: TextAlign.center,
-              style: GoogleFonts.inter(
-                color: const Color.fromRGBO(236, 109, 55, 1),
-                fontSize: screenHeight * 0.025,
-                fontWeight: FontWeight.normal,
+            top: screenHeight * 0.775,
+            left: screenWidth * 0.727,
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CombinedSignUpPage(),
+                  ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                elevation: 0, // No shadow
+              ).copyWith(
+                backgroundColor: WidgetStateProperty.resolveWith<Color>(
+                  (states) => Colors.transparent,
+                ),
+              ),
+              child: Text(
+                'Check',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.inter(
+                  color: const Color.fromRGBO(236, 109, 55, 1),
+                  fontSize: screenHeight * 0.025,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
             ),
           ),

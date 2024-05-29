@@ -1,7 +1,95 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class UserSignUp extends StatelessWidget {
+class UserSignUp extends StatefulWidget {
   const UserSignUp({super.key});
+
+  @override
+  _UserSignUpState createState() => _UserSignUpState();
+}
+
+class _UserSignUpState extends State<UserSignUp> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  Future<void> signUp() async {
+    // Validate input fields
+    if (emailController.text.isEmpty ||
+        usernameController.text.isEmpty ||
+        passwordController.text.isEmpty) {
+      showAlertDialog(
+          context, 'Validation Error', 'Please fill in all fields.');
+      return;
+    }
+
+    if (!isValidEmail(emailController.text)) {
+      showAlertDialog(
+          context, 'Validation Error', 'Please enter a valid email address.');
+      return;
+    }
+
+    if (passwordController.text.length < 6) {
+      showAlertDialog(context, 'Validation Error',
+          'Password should be at least 6 characters.');
+      return;
+    }
+
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .set({
+        'username': usernameController.text,
+        'email': emailController.text,
+      });
+
+      print("User signed up and details stored in Firestore");
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        showAlertDialog(context, 'Weak Password',
+            'Password should be at least 6 characters.');
+      } else {
+        showAlertDialog(
+            context, 'Sign Up Error', 'An error occurred: ${e.message}');
+      }
+    } catch (e) {
+      showAlertDialog(
+          context, 'Sign Up Error', 'An unexpected error occurred.');
+    }
+  }
+
+  bool isValidEmail(String email) {
+    // Simple email validation, you can implement more complex validation if needed
+    return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
+  }
+
+  void showAlertDialog(BuildContext context, String title, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +105,7 @@ class UserSignUp extends StatelessWidget {
         ),
         child: Stack(
           children: <Widget>[
-            //whiteBackground
+            // White Background
             Positioned(
               top: screenHeight * 0.332,
               left: -screenWidth * 0.48,
@@ -30,7 +118,7 @@ class UserSignUp extends StatelessWidget {
                 ),
               ),
             ),
-            //phoneno text
+            // Phone no / Email id Label
             Positioned(
               top: screenHeight * 0.43,
               left: screenWidth * 0.11,
@@ -46,7 +134,7 @@ class UserSignUp extends StatelessWidget {
                 ),
               ),
             ),
-            //Phone no text field
+            // Email TextField
             Positioned(
               top: screenHeight * 0.46,
               left: screenWidth * 0.12,
@@ -54,6 +142,7 @@ class UserSignUp extends StatelessWidget {
                 width: screenWidth * 0.76,
                 height: screenHeight * 0.051,
                 child: TextField(
+                  controller: emailController,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: const Color.fromRGBO(255, 255, 255, 1),
@@ -68,15 +157,14 @@ class UserSignUp extends StatelessWidget {
                         vertical: screenHeight * 0.013,
                         horizontal: screenWidth * 0.03),
                     prefixIcon: const Icon(
-                      Icons.email, // Choose the appropriate icon
-                      color: Color.fromRGBO(
-                          1, 178, 125, 1), // Match the border color
+                      Icons.email,
+                      color: Color.fromRGBO(1, 178, 125, 1),
                     ),
                   ),
                 ),
               ),
             ),
-
+            // User Name Label
             Positioned(
               top: screenHeight * 0.53,
               left: screenWidth * 0.11,
@@ -92,7 +180,7 @@ class UserSignUp extends StatelessWidget {
                 ),
               ),
             ),
-            //User Name textfield
+            // User Name TextField
             Positioned(
               top: screenHeight * 0.56,
               left: screenWidth * 0.12,
@@ -100,6 +188,7 @@ class UserSignUp extends StatelessWidget {
                 width: screenWidth * 0.76,
                 height: screenHeight * 0.051,
                 child: TextField(
+                  controller: usernameController,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: const Color.fromRGBO(255, 255, 255, 1),
@@ -114,15 +203,14 @@ class UserSignUp extends StatelessWidget {
                         vertical: screenHeight * 0.013,
                         horizontal: screenWidth * 0.03),
                     prefixIcon: const Icon(
-                      Icons.person, // Choose the appropriate icon
-                      color: Color.fromRGBO(
-                          1, 178, 125, 1), // Match the border color
+                      Icons.person,
+                      color: Color.fromRGBO(1, 178, 125, 1),
                     ),
                   ),
                 ),
               ),
             ),
-            //confirm Password
+            // Confirm Password Label
             Positioned(
               top: screenHeight * 0.63,
               left: screenWidth * 0.11,
@@ -138,7 +226,7 @@ class UserSignUp extends StatelessWidget {
                 ),
               ),
             ),
-
+            // Password TextField
             Positioned(
               top: screenHeight * 0.66,
               left: screenWidth * 0.12,
@@ -146,6 +234,7 @@ class UserSignUp extends StatelessWidget {
                 width: screenWidth * 0.76,
                 height: screenHeight * 0.051,
                 child: TextField(
+                  controller: passwordController,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: const Color.fromRGBO(255, 255, 255, 1),
@@ -160,22 +249,21 @@ class UserSignUp extends StatelessWidget {
                         vertical: screenHeight * 0.013,
                         horizontal: screenWidth * 0.03),
                     prefixIcon: const Icon(
-                      Icons.lock, // Choose the appropriate icon
-                      color: Color.fromRGBO(
-                          1, 178, 125, 1), // Match the border color
+                      Icons.lock,
+                      color: Color.fromRGBO(1, 178, 125, 1),
                     ),
                   ),
                 ),
               ),
             ),
-
+            // Sign Up Button
             Positioned(
               top: screenHeight * 0.77,
               left: screenWidth * 0.09,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: signUp,
                 style: ElevatedButton.styleFrom(
-                  elevation: 0, // No shadow
+                  elevation: 0,
                 ).copyWith(
                   backgroundColor: WidgetStateProperty.resolveWith<Color>(
                     (states) => Colors.transparent,
@@ -190,18 +278,18 @@ class UserSignUp extends StatelessWidget {
                   ),
                   child: const Center(
                     child: Text(
-                      'Sign Up', // Add your desired text here
+                      'Sign Up',
                       style: TextStyle(
-                        color: Colors.white, // Text color
-                        fontSize: 20, // Text size
-                        fontWeight: FontWeight.bold, // Text weight
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ),
               ),
             ),
-
+            // Already have an Account Label
             Positioned(
               top: screenHeight * 0.87,
               left: screenWidth * 0.12,
@@ -217,13 +305,14 @@ class UserSignUp extends StatelessWidget {
                 ),
               ),
             ),
+            // Log In Button
             Positioned(
               top: screenHeight * 0.851,
               left: screenWidth * 0.72,
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  elevation: 0, // No shadow
+                  elevation: 0,
                 ).copyWith(
                   backgroundColor: WidgetStateProperty.resolveWith<Color>(
                     (states) => Colors.transparent,
@@ -231,10 +320,10 @@ class UserSignUp extends StatelessWidget {
                 ),
                 child: const Center(
                   child: Text(
-                    'Log in',
+                    'Log In',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Color.fromRGBO(236, 109, 55, 1),
+                      color: Color.fromRGBO(226, 11, 11, 1),
                       fontFamily: 'Inter',
                       fontSize: 20,
                       fontWeight: FontWeight.normal,
@@ -244,23 +333,8 @@ class UserSignUp extends StatelessWidget {
                 ),
               ),
             ),
-
             Positioned(
-              top: screenHeight * 0.0875,
-              left: screenWidth * 0.08,
-              child: Container(
-                width: screenWidth * 0.815,
-                height: screenHeight * 0.24375,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('images/UNITED.gif'),
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              top: screenHeight * 0.09,
+              top: screenHeight * 0.11625,
               left: screenWidth * 0.011,
               child: TextButton(
                 // Change from Positioned to TextButton
@@ -271,7 +345,7 @@ class UserSignUp extends StatelessWidget {
                   turns: AlwaysStoppedAnimation(0),
                   child: Icon(
                     Icons.arrow_back, // Change from SvgPicture to Icon
-                    size: 30,
+                    size: 24,
                     color: Colors.black,
                   ),
                 ),
