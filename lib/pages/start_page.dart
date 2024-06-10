@@ -1,4 +1,4 @@
-import 'package:crisisconnect/pages/combined_sign_up.dart';
+import 'package:crisisconnect/pages/agenct_sign_up.dart';
 import 'package:crisisconnect/pages/listing_the_agencies.dart';
 import 'package:crisisconnect/pages/user_sign_up.dart';
 import 'package:flutter/material.dart';
@@ -140,7 +140,7 @@ class StartPage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const CombinedSignUpPage(),
+                    builder: (context) => const AgencySignUp(),
                   ),
                 );
               },

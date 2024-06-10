@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:crisisconnect/pages/Help_confirmation.dart'; // Ensure this path is correct
+import 'package:crisisconnect/pages/help_confirmation.dart'; // Ensure this path is correct
 
 class ListingTheAgency extends StatefulWidget {
   const ListingTheAgency({super.key});
@@ -71,82 +71,79 @@ class _ListingTheAgencyState extends State<ListingTheAgency> {
             Positioned(
               top: screenHeight * 0.11625,
               left: screenWidth * 0.15,
-              child: SizedBox(
-                width: screenWidth * 0.6,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: Colors.white,
-                    border: Border.all(
-                      color: const Color.fromRGBO(1, 178, 125, 1),
-                      width: 1.0,
-                    ),
+              right: screenWidth * 0.15,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  color: Colors.white,
+                  border: Border.all(
+                    color: const Color.fromRGBO(1, 178, 125, 1),
+                    width: 1.0,
                   ),
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: 'Search...',
-                      hintStyle: TextStyle(
-                        color: Colors.grey,
-                      ),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                      border: InputBorder.none,
+                ),
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: 'Search...',
+                    hintStyle: TextStyle(
+                      color: Colors.grey,
                     ),
-                    onChanged: (value) {
-                      setState(() {
-                        filteredServices = services
-                            .where((service) => service
-                                .toLowerCase()
-                                .startsWith(value.toLowerCase()))
-                            .toList();
-                      });
-                    },
+                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                    border: InputBorder.none,
                   ),
+                  onChanged: (value) {
+                    setState(() {
+                      filteredServices = services
+                          .where((service) => service
+                              .toLowerCase()
+                              .startsWith(value.toLowerCase()))
+                          .toList();
+                    });
+                  },
                 ),
               ),
             ),
             Positioned(
               top: screenHeight * 0.2,
               left: screenWidth * 0.05,
-              child: SizedBox(
-                width: screenWidth * 0.9,
-                height: screenHeight * 0.7,
-                child: ListView.builder(
-                  itemCount: filteredServices.length,
-                  itemBuilder: (context, index) {
-                    final service = filteredServices[index];
-                    return CheckboxListTile(
-                      title: Text(
-                        service,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          color: Colors.black,
-                        ),
+              right: screenWidth * 0.05,
+              bottom: screenHeight * 0.2,
+              child: ListView.builder(
+                itemCount: filteredServices.length,
+                itemBuilder: (context, index) {
+                  final service = filteredServices[index];
+                  return CheckboxListTile(
+                    title: Text(
+                      service,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Colors.black,
                       ),
-                      value: selectedServices.contains(service),
-                      onChanged: (isChecked) {
-                        setState(() {
-                          if (isChecked!) {
-                            selectedServices.add(service);
-                          } else {
-                            selectedServices.remove(service);
-                          }
-                        });
-                      },
-                    );
-                  },
-                ),
+                    ),
+                    value: selectedServices.contains(service),
+                    onChanged: (isChecked) {
+                      setState(() {
+                        if (isChecked!) {
+                          selectedServices.add(service);
+                        } else {
+                          selectedServices.remove(service);
+                        }
+                      });
+                    },
+                  );
+                },
               ),
             ),
             Positioned(
-              bottom: screenHeight * 0.1,
+              bottom: screenHeight * 0.05,
               left: screenWidth * 0.1,
+              right: screenWidth * 0.1,
               child: ElevatedButton(
                 onPressed: () {
-                  // Debugging statement
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const HelpConfirmation(),
+                      builder: (context) =>
+                          HelpConfirmation(selectedServices: selectedServices),
                     ),
                   );
                 },

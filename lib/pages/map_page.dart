@@ -62,7 +62,7 @@ class MapPage extends StatelessWidget {
                 height: screenHeight * 0.118,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('/images/Phone.png'),
+                    image: AssetImage('images/Phone.png'),
                     fit: BoxFit.fitWidth,
                   ),
                 ),
@@ -80,32 +80,6 @@ class MapPage extends StatelessWidget {
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
                   height: 1,
-                ),
-              ),
-            ),
-            Positioned(
-              top: screenHeight * 0.376,
-              left: 0,
-              child: Container(
-                width: screenWidth,
-                height: screenHeight * 0.334,
-                decoration: BoxDecoration(
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color.fromRGBO(0, 0, 0, 0.25),
-                      offset: Offset(0, 4),
-                      blurRadius: 4,
-                    )
-                  ],
-                  border: Border.all(
-                    color: const Color.fromRGBO(1, 178, 125, 1),
-                    width: 1.5,
-                  ),
-                  image: const DecorationImage(
-                    image:
-                        AssetImage('/images/Whatsappimage20240511at9011.png'),
-                    fit: BoxFit.fitWidth,
-                  ),
                 ),
               ),
             ),

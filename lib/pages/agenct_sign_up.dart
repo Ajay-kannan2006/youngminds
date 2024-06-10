@@ -1,14 +1,15 @@
+import 'package:crisisconnect/pages/userlogin.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class CombinedSignUpPage extends StatefulWidget {
-  const CombinedSignUpPage({super.key});
+class AgencySignUp extends StatefulWidget {
+  const AgencySignUp({Key? key}) : super(key: key);
 
   @override
-  _CombinedSignUpPageState createState() => _CombinedSignUpPageState();
+  _AgencySignUpState createState() => _AgencySignUpState();
 }
 
-class _CombinedSignUpPageState extends State<CombinedSignUpPage> {
+class _AgencySignUpState extends State<AgencySignUp> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController confirmPasswordController =
@@ -21,6 +22,21 @@ class _CombinedSignUpPageState extends State<CombinedSignUpPage> {
   final TextEditingController stateController = TextEditingController();
   final TextEditingController pincodeController = TextEditingController();
   String? agencyType;
+
+  final List<String> allowedTypes = [
+    'Doctor',
+    'Police',
+    'Fireforce',
+    'Ambulance',
+    'Other',
+    'Hospital',
+    'Government Agency',
+    'Non-profit Organization',
+    'Animal Control',
+    'Utility Services',
+    'Construction Company',
+    'Security Services'
+  ];
 
   void signUp() async {
     final email = emailController.text;
@@ -215,6 +231,7 @@ class _CombinedSignUpPageState extends State<CombinedSignUpPage> {
                     height: screenHeight * 0.01,
                   ),
                   DropdownButtonFormField<String>(
+                    value: agencyType,
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: const Color.fromRGBO(255, 255, 255, 1),
@@ -230,28 +247,12 @@ class _CombinedSignUpPageState extends State<CombinedSignUpPage> {
                         color: Color.fromRGBO(1, 178, 125, 1),
                       ),
                     ),
-                    items: const [
-                      DropdownMenuItem(
-                        value: 'Police',
-                        child: Text('Police'),
-                      ),
-                      DropdownMenuItem(
-                        value: 'Doctor',
-                        child: Text('Doctor'),
-                      ),
-                      DropdownMenuItem(
-                        value: 'Fireforce',
-                        child: Text('Fireforce'),
-                      ),
-                      DropdownMenuItem(
-                        value: 'Ambulance',
-                        child: Text('Ambulance'),
-                      ),
-                      DropdownMenuItem(
-                        value: 'Other',
-                        child: Text('Other'),
-                      ),
-                    ],
+                    items: allowedTypes.map((type) {
+                      return DropdownMenuItem(
+                        value: type,
+                        child: Text(type),
+                      );
+                    }).toList(),
                     onChanged: (value) {
                       setState(() {
                         agencyType = value;
@@ -495,7 +496,12 @@ class _CombinedSignUpPageState extends State<CombinedSignUpPage> {
                       ),
                       TextButton(
                         onPressed: () {
-                          // Navigate to the login page
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const UserLogin(),
+                            ),
+                          );
                         },
                         child: const Text(
                           "Log In",

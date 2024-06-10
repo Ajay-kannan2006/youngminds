@@ -1,3 +1,4 @@
+import 'package:crisisconnect/pages/userlogin.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -37,12 +38,30 @@ class _UserSignUpState extends State<UserSignUp> {
     }
 
     try {
+      // Check if the email or username already exists in both 'users' and 'agency' collections
+      bool emailExists = await checkIfEmailExists(emailController.text);
+      bool usernameExists =
+          await checkIfUsernameExists(usernameController.text);
+
+      if (emailExists) {
+        showAlertDialog(context, 'Validation Error', 'Email already exists.');
+        return;
+      }
+
+      if (usernameExists) {
+        showAlertDialog(
+            context, 'Validation Error', 'Username already exists.');
+        return;
+      }
+
+      // Create user with email and password
       UserCredential userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
       );
 
+      // Store user details in Firestore
       await FirebaseFirestore.instance
           .collection('users')
           .doc(userCredential.user!.uid)
@@ -64,6 +83,38 @@ class _UserSignUpState extends State<UserSignUp> {
       showAlertDialog(
           context, 'Sign Up Error', 'An unexpected error occurred.');
     }
+  }
+
+  Future<bool> checkIfEmailExists(String email) async {
+    // Check 'users' collection
+    var userSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: email)
+        .get();
+
+    // Check 'agency' collection
+    var agencySnapshot = await FirebaseFirestore.instance
+        .collection('agency')
+        .where('email', isEqualTo: email)
+        .get();
+
+    return userSnapshot.docs.isNotEmpty || agencySnapshot.docs.isNotEmpty;
+  }
+
+  Future<bool> checkIfUsernameExists(String username) async {
+    // Check 'users' collection
+    var userSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('username', isEqualTo: username)
+        .get();
+
+    // Check 'agency' collection
+    var agencySnapshot = await FirebaseFirestore.instance
+        .collection('agency')
+        .where('username', isEqualTo: username)
+        .get();
+
+    return userSnapshot.docs.isNotEmpty || agencySnapshot.docs.isNotEmpty;
   }
 
   bool isValidEmail(String email) {
@@ -310,7 +361,14 @@ class _UserSignUpState extends State<UserSignUp> {
               top: screenHeight * 0.851,
               left: screenWidth * 0.72,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const UserLogin(),
+                    ),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   elevation: 0,
                 ).copyWith(
@@ -329,6 +387,20 @@ class _UserSignUpState extends State<UserSignUp> {
                       fontWeight: FontWeight.normal,
                       height: 1,
                     ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.0875,
+              left: screenWidth * 0.08,
+              child: Container(
+                width: screenWidth * 0.815,
+                height: screenHeight * 0.24375,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('images/UNITED.gif'),
+                    fit: BoxFit.fitWidth,
                   ),
                 ),
               ),
