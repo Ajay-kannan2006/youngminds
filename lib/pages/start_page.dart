@@ -2,16 +2,50 @@ import 'package:crisisconnect/pages/agenct_sign_up.dart';
 import 'package:crisisconnect/pages/listing_the_agencies.dart';
 import 'package:crisisconnect/pages/user_sign_up.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart'; // Added import for Google Fonts
+import 'package:google_fonts/google_fonts.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:permission_handler/permission_handler.dart'; // Import permission_handler package
 
 class StartPage extends StatelessWidget {
-  const StartPage({super.key});
+  const StartPage({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    // Get screen dimensions
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+
+    Future<void> _startButtonPressed(BuildContext context) async {
+      try {
+        // Request location permission first
+        bool isLocationPermissionGranted = await requestLocationPermission();
+        if (!isLocationPermissionGranted)
+          return; // Permission not granted, exit
+
+        // Get current user location
+        Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high,
+        );
+
+        // Store location in Firebase
+        await FirebaseFirestore.instance.collection('user_locations').add({
+          'latitude': position.latitude,
+          'longitude': position.longitude,
+          // Add more data if needed
+        });
+
+        // Navigate to the next screen
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ListingTheAgency(),
+          ),
+        );
+      } catch (e) {
+        print("Error getting location: $e");
+        // Handle error
+      }
+    }
 
     return Scaffold(
       backgroundColor: const Color.fromRGBO(1, 178, 125, 1),
@@ -36,14 +70,7 @@ class StartPage extends StatelessWidget {
               width: screenWidth * 0.816,
               height: screenHeight * 0.07,
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ListingTheAgency(),
-                    ),
-                  );
-                },
+                onPressed: () => _startButtonPressed(context),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromRGBO(1, 178, 125, 1),
                   shape: RoundedRectangleBorder(
@@ -179,5 +206,11 @@ class StartPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  // Function to request location permission
+  Future<bool> requestLocationPermission() async {
+    final permissionStatus = await Permission.location.request();
+    return permissionStatus == PermissionStatus.granted;
   }
 }
