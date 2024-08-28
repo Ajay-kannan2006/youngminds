@@ -1,4 +1,4 @@
-import 'package:crisisconnect/pages/agenct_sign_up.dart';
+import 'package:crisisconnect/pages/agency_sign_up.dart';
 import 'package:crisisconnect/pages/listing_the_agencies.dart';
 import 'package:crisisconnect/pages/user_sign_up.dart';
 import 'package:flutter/material.dart';
